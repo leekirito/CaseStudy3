@@ -2,9 +2,8 @@ from abc import ABC, abstractmethod
 
 class Person():
 
-    @classmethod
-    def __init__(self, id, username, password, last_name, first_name, middle_name, age, contact_number, gender, email, address):
-        self.id = id
+    @abstractmethod
+    def __init__(self, username, password, last_name, first_name, middle_name, age, contact_number, gender, email, address):
         self.username = username
         self.password = password
         self.last_name = last_name
