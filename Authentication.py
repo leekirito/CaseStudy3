@@ -8,7 +8,8 @@ class Authentication():
         instructors = Instructor.get_data()
         for instructor in instructors:
             if username == instructor.username and password == instructor.password:
-                return True
+                return instructor
+        print("User Does not exist")
         return False
     
     @staticmethod
@@ -16,7 +17,8 @@ class Authentication():
         students = Student.get_data()
         for student in students:
             if username == student.username and password == student.password:
-                return True
+                return student
+        print("User Does not exist")
         return False
 
 

@@ -3,6 +3,7 @@ from Student import Student
 import pyodbc
 import uuid
 import getpass
+from Course import Course
 
 def connect_to_database():
     return pyodbc.connect(
@@ -79,6 +80,7 @@ class Register():
         contract_status = input("Enter Contract Status (Full-time/Part-time/Contract): ")
         office_hours = input("Enter Office Hours: ")
         response_time = input("Enter Response Time: ")
+        Course.create_course(instructor_id)
         
         conn = connect_to_database()
         cursor = conn.cursor()

@@ -2,6 +2,9 @@ import pyodbc
 from datetime import datetime 
 import os 
 from tabulate import tabulate
+from Student import Student
+from Enrollment import Enrollment
+from Course import Course
 
 def connect_to_database():
     return pyodbc.connect(
@@ -49,8 +52,31 @@ class Assignment():
         return assignments
 
     @classmethod
-    def assign_work(cls, intructor_id, student_id):
-        course_id = input("Course ID: ")
+    def assign_work(cls, intructor_id):
+        username = input("Student Username: ")
+        students = Student.get_data()
+        student_id = None
+        for student in students:
+            if student.username == username:
+                student_id = student.student_id
+                break
+        else:
+            print("Student does not exist")
+            return None
+
+        course_id = None
+        courses = Course.get_data()
+        for course in courses:
+            if intructor_id == course.intructor_id:
+                course_id = course.course_id
+
+        enrollments = Enrollment.get_data()
+        for enroll in enrollments:
+            if student_id == enroll.student_id and course_id == enroll.course_id:
+                break
+        else:
+            print("This student is not enrolled in your course!")
+            return None
         assignment_name = input("Assignment Name: ")
         assigned_date = datetime.now().date()
         due_date = input("Due Date(YYYY-MM-DD): ")
@@ -78,12 +104,12 @@ class Assignment():
         header = ["Student ID","Course ID","Title","Detials","Assigned Date", "Due Date", "Grade"]
         print(tabulate(content, header, tablefmt="pretty"))
 
-    @classmethod
-    def show_assigned_work(cls, student_id):
-        works = cls.get_data()
+
+    def show_assigned_work(self):
+        works = Assignment.get_data()
         content = []
         for work in works:
-            if student_id == work.student_id:
+            if self.student_id == work.student_id:
                 content.append([work.intructor_id, work.course_id, work.assignment_name, work.details, work.assigned_date, work.due_date, work.grade])
         header = ["Intructor ID","Course ID","Title","Detials","Assigned Date", "Due Date", "Grade"]
         print(tabulate(content, header, tablefmt="pretty"))
