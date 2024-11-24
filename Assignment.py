@@ -16,7 +16,7 @@ def connect_to_database():
 
 class Assignment():
     
-    def __init__(self, assignment_id, intructor_id, student_id, course_id, assignment_name, assigned_date, due_date, details, grade):
+    def __init__(self, assignment_id, intructor_id, student_id, course_id, assignment_name, assigned_date, due_date, details, grade, response):
         self.assignment_id  = assignment_id
         self.intructor_id =intructor_id
         self.student_id = student_id
@@ -26,6 +26,7 @@ class Assignment():
         self.due_date = due_date
         self.details = details
         self.grade = grade
+        self.response = response
 
     @classmethod
     def get_data(cls):
@@ -43,10 +44,12 @@ class Assignment():
                 assigned_date=row.assigned_date,
                 due_date=row.due_date,
                 details=row.details,
-                grade=row.grade
+                grade=row.grade,
+                response=row.response
             )
             for row in rows
-        ]        
+        ]  
+
         cursor.close()
         conn.close()
         return assignments
@@ -100,16 +103,37 @@ class Assignment():
         content = []
         for work in works:
             if intructor_id == work.intructor_id:
-                content.append([work.student_id, work.course_id, work.assignment_name, work.details, work.assigned_date, work.due_date, work.grade])
-        header = ["Student ID","Course ID","Title","Detials","Assigned Date", "Due Date", "Grade"]
+                content.append([work.assignment_id, work.student_id, work.course_id, work.assignment_name, work.details, work.assigned_date, work.due_date, work.grade, work.response])
+        header = ["Assignment ID","Student ID","Course ID","Title","Detials","Assigned Date", "Due Date", "Grade", "Response"]
         print(tabulate(content, header, tablefmt="pretty"))
 
-
-    def show_assigned_work(self):
+    @classmethod
+    def show_assigned_work(cls, student_id):
         works = Assignment.get_data()
         content = []
         for work in works:
-            if self.student_id == work.student_id:
-                content.append([work.intructor_id, work.course_id, work.assignment_name, work.details, work.assigned_date, work.due_date, work.grade])
-        header = ["Intructor ID","Course ID","Title","Detials","Assigned Date", "Due Date", "Grade"]
+            if student_id == work.student_id:
+                content.append([work.assignment_id,work.intructor_id, work.course_id, work.assignment_name, work.details, work.assigned_date, work.due_date, work.grade, work.response])
+        header = ["Assignment ID","Intructor ID","Course ID","Title","Detials","Assigned Date", "Due Date", "Grade", "Response"]
         print(tabulate(content, header, tablefmt="pretty"))
+
+    @classmethod
+    def answer_assignment(cls,student_id):
+        cls.show_assigned_work(student_id)
+        assignment_id = int(input("Assignment ID: "))
+        assignments = cls.get_data()
+        response = None
+        for assignment in assignments:
+            if assignment_id == assignment.assignment_id and student_id == assignment.student_id:
+                response = input("Your answer: ")
+                break
+        else:
+            print("Assignment did not exit")
+            return None
+        conn = connect_to_database()
+        cursor = conn.cursor()
+        cursor.execute("UPDATE Assignments SET response = ? WHERE assignment_id = ?", (response, assignment_id))
+        conn.commit()
+        cursor.close()
+        conn.close()
+                
