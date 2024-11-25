@@ -5,6 +5,7 @@ from tabulate import tabulate
 from Course import Course
 from Student import Student
 from Course import Course
+from Payment import Payment
 
 
 def connect_to_database():
@@ -68,9 +69,11 @@ class Enrollment():
                 student_id = student.student_id
         Course.show_all_courses()
         course_id = input("Course ID: ")
+        course_price = None
         courses = Course.get_data()
         for course in courses:
             if course.course_id == course_id:
+                course_price = course.price
                 break
         else:#for else logic, else statement will execute if and only if for loop doesn't hit a break statement
             print("Course ID does not exist!")
@@ -78,6 +81,8 @@ class Enrollment():
         enrollment_date = datetime.now().date()
         status = "active"
         progress = "0%"
+        if not Payment.pay(course_price):
+            return None
         conn = connect_to_database()
         cursor = conn.cursor()
         cursor.execute("""
