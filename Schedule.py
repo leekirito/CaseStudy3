@@ -42,3 +42,9 @@ class Schedule():
         cursor.close()
         conn.close()
         return schedules
+    
+    @classmethod
+    def create_schedule(cls, intructor_id):
+        course_id = int(input("Course ID: "))
+        
+
