@@ -22,7 +22,7 @@ class main():
         start_options = {
             "1": self.log_in_instructor_menu(),
             "2": self.log_in_student_menu(),
-            "3": self.log_in_admin(),
+            "3": self.log_in_admin_menu(),
             "4": self.register_as_instructor_menu(),
             "5": self.register_as_student_menu()
         }
