@@ -1,10 +1,4 @@
 import pyodbc
-from datetime import datetime 
-import os 
-from tabulate import tabulate
-from Course import Course
-from Student import Student
-from Course import Course
 from Assignment import Assignment
 
 

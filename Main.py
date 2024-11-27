@@ -8,7 +8,6 @@ from PlatformAdmin import PlatformAdmin
 from Register import Register
 from Schedule import Schedule
 from Student import Student
-import pyodbc
 from getpass import getpass
 
 class main():
@@ -262,5 +261,11 @@ class main():
         else:
             print("Cancelled operation")
             return
+        
+# Initialize the online shop
+if __name__ == "__main__":
+    Main = main()
+    Main.Start_menu()
+
 
 

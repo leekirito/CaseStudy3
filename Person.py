@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-class Person():
+class Person(ABC):
 
     @abstractmethod
     def __init__(self, username, password, last_name, first_name, middle_name, age, contact_number, gender, email, address):

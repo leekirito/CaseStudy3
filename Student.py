@@ -16,7 +16,7 @@ def connect_to_database():
 class Student(Person):
 
     def __init__(self, student_id, username, password, last_name, first_name, middle_name, age, contact_number, gender, email, address, total_courses, date_of_birth, access_level, account_status, average_study_time):
-        super().__init__(id, username, password, last_name, first_name, middle_name, age, contact_number, gender, email, address)
+        super().__init__(username, password, last_name, first_name, middle_name, age, contact_number, gender, email, address)
         self.student_id = student_id
         self.total_courses = total_courses
         self.date_of_birth = date_of_birth

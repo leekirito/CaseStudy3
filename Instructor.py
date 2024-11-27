@@ -1,7 +1,5 @@
 from Person import Person
 import pyodbc
-import uuid
-import getpass
 
 def connect_to_database():
     return pyodbc.connect(

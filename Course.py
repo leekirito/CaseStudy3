@@ -2,7 +2,6 @@ import pyodbc
 from datetime import datetime 
 import os 
 from tabulate import tabulate
-from Schedule import Schedule
 
 
 def connect_to_database():
@@ -85,6 +84,7 @@ class Course():
 
     @classmethod
     def create_course(cls, intructor_id):
+        from Schedule import Schedule
         course_name = input("Course Name: ")
         course_description = input("Course Description: ")
         average_duration = input("Average duration: ")
@@ -114,5 +114,5 @@ class Course():
         cursor.close()
         conn.close()
 
-    
+        
 

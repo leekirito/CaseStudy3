@@ -2,9 +2,7 @@ import pyodbc
 from datetime import datetime 
 import os 
 from tabulate import tabulate
-from Course import Course
 from Student import Student
-from Course import Course
 from Payment import Payment
 
 
@@ -72,6 +70,7 @@ class Enrollment():
 
     @classmethod
     def take_course(username):
+        from Course import Course
         Course.show_all_courses()
         studetns = Student.get_data()
         student_id = None
