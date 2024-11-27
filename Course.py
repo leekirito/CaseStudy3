@@ -2,6 +2,7 @@ import pyodbc
 from datetime import datetime 
 import os 
 from tabulate import tabulate
+from Schedule import Schedule
 
 
 def connect_to_database():
@@ -94,9 +95,12 @@ class Course():
         conn = connect_to_database()
         cursor = conn.cursor()
         cursor.execute("""INSERT INTO Courses(course_name, intructor_id, price, average_duration, description, rating, last_updated, number_of_students)
+                       OUTPUT INSERTED.course_id
                        VALUES(?,?,?,?,?,?,?,?,)
-                       
                        """, (course_name, intructor_id, price, average_duration, course_description, rating, last_updated, number_of_students))
+        
+        course_id = cursor.fetchone()[0]
+        Schedule.create_schedule(course_id)
         conn.commit()
         cursor.close()
         conn.close()
@@ -109,4 +113,6 @@ class Course():
         conn.commit()
         cursor.close()
         conn.close()
+
+    
 

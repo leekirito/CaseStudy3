@@ -1,5 +1,6 @@
 import pyodbc
 from Course import Course
+from tabulate import tabulate
 
 def connect_to_database():
     return pyodbc.connect(
@@ -168,6 +169,24 @@ class Schedule():
         conn.commit()
         cursor.close()
         conn.close()
+
+    @classmethod
+    def get_schedule(cls):
+        course_id = int(input("Course ID: "))
+        schedules = cls.get_data()
+        content = []
+        for schedule in schedules:
+            if course_id == schedule.course_id:
+                content.append([schedule.course_id, schedule.instructor_id, schedule.session_days, schedule.start_time, schedule.end_time, schedule.location, schedule.time_zone])
+                break
+
+        else:
+            print("Course Doesn't exist or does not have a schedule")
+            return
+        
+        header = ["Course ID","Intructor ID","Session Days","Start Time","End Time","Location","Time Zone" ]
+        print(tabulate(content, header, tablefmt="pretty"))
+
 
         
         

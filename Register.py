@@ -51,6 +51,7 @@ class Register():
         conn.commit()
         cursor.close()
         conn.close()
+        print(f"Here's your student ID, please keep this confidential{student_id}, registred successfully!")
 
     @classmethod
     def register_instructor(cls):
@@ -91,3 +92,4 @@ class Register():
         conn.commit()
         cursor.close()
         conn.close()
+        print(f"Here's your instructor ID, please keep this confidential{instructor_id}, registred successfully!")

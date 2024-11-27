@@ -50,11 +50,22 @@ class Enrollment():
         return enrollments
 
     @classmethod
-    def show_enrolled_course(cls):
+    def show__all_enrolled_course(cls):
         enrolls = cls.get_data()
         content = []
         for enroll in enrolls:
             content.append([enroll.enrollment_id, enroll.student_id, enroll.course_id, enroll.enrollment_date, enroll.status, enroll.progress])
+
+        header = ["Enrollment ID","Student ID","Course ID","Enrolled Date","Status","Progress",]
+        print(tabulate(content, header, tablefmt="pretty"))
+
+    @classmethod
+    def show_my_enrolled_course(cls, student_id):
+        enrolls = cls.get_data()
+        content = []
+        for enroll in enrolls:
+            if student_id == enroll.student_id:
+                content.append([enroll.enrollment_id, enroll.student_id, enroll.course_id, enroll.enrollment_date, enroll.status, enroll.progress])
 
         header = ["Enrollment ID","Student ID","Course ID","Enrolled Date","Status","Progress",]
         print(tabulate(content, header, tablefmt="pretty"))
@@ -94,3 +105,24 @@ class Enrollment():
         conn.close()
         Course.add_student(course_id)
         print("succesfuly took course!")
+
+    @classmethod
+    def show_all_student_in_course(cls, course_id):
+        conn = connect_to_database()
+        cursor = conn.cursor()
+        cursor.execute("""SELECT Students.username, Students.last_name, Courses.course_name, Enrollments.status, Enrollments.progress FROM Enrollments
+                       JOIN Students ON Enrollments.student_id = Students.student_id
+                       JOIN Courses ON Enrollments.course_id = Courses.course_id
+                       WHERE Enrollments.course_id = ?
+                       """, (course_id))
+        rows = cursor.fetchall()
+
+        content = []
+        for row in rows:
+            content.append([row.username, row.last_name, row.course_name, row.status, row.progress])
+
+        header = ["Username", "Last Name","Course Name","Progress","Progress"]
+
+        print(tabulate(content, header, tablefmt="pretty"))
+
+    
