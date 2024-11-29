@@ -81,8 +81,6 @@ class Register():
         contract_status = input("Enter Contract Status (Full-time/Part-time/Contract): ")
         office_hours = input("Enter Office Hours: ")
         response_time = input("Enter Response Time: ")
-        Course.create_course(instructor_id)
-        
         conn = connect_to_database()
         cursor = conn.cursor()
         cursor.execute("""
@@ -92,4 +90,5 @@ class Register():
         conn.commit()
         cursor.close()
         conn.close()
-        print(f"Here's your instructor ID, please keep this confidential{instructor_id}, registred successfully!")
+        Course.create_course(instructor_id)
+        print(f"Here's your instructor ID, please keep this confidential {instructor_id}, registred successfully!")

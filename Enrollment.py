@@ -69,20 +69,14 @@ class Enrollment():
         print(tabulate(content, header, tablefmt="pretty"))
 
     @classmethod
-    def take_course(username):
+    def take_course(cls, student_id):
         from Course import Course
-        Course.show_all_courses()
-        studetns = Student.get_data()
-        student_id = None
-        for student in studetns:
-            if student.username == username:
-                student_id = student.student_id
         Course.show_all_courses()
         course_id = input("Course ID: ")
         course_price = None
         courses = Course.get_data()
         for course in courses:
-            if course.course_id == course_id:
+            if str(course.course_id) == str(course_id):
                 course_price = course.price
                 break
         else:#for else logic, else statement will execute if and only if for loop doesn't hit a break statement

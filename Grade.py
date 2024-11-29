@@ -21,7 +21,7 @@ class Grade():
         assignment_id = input("Which Assignment to grade(ID): ")
         assignments = Assignment.get_data()
         for assignment in assignments:
-            if assignment.assignment_id == assignment_id:
+            if str(assignment.assignment_id) == (assignment_id):
                 while True:
                     grade = int(input("Grade(0/100): "))
                     if grade < 0 or grade > 100:

@@ -12,7 +12,7 @@ def connect_to_database():
 class Instructor(Person):
 
     def __init__(self, instructor_id, username, password, last_name, first_name, middle_name, age, contact_number, gender, email, address, bio, teaching_experience, specialization, contract_status, office_hours, response_time):
-        super().__init__(instructor_id, username, password, last_name, first_name, middle_name, age, contact_number, gender, email, address)
+        super().__init__(username, password, last_name, first_name, middle_name, age, contact_number, gender, email, address)
         self.instructor_id = instructor_id
         self.bio = bio
         self.teaching_experience = teaching_experience

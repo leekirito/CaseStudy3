@@ -14,10 +14,10 @@ def connect_to_database():
 
 class Course():
 
-    def __init__(self, course_id, course_name, intructor_id, price, average_duration, description, rating, last_updated, number_of_students):
+    def __init__(self, course_id, course_name, instructor_id, price, average_duration, description, rating, last_updated, number_of_students):
         self.course_id = course_id
         self.course_name = course_name
-        self.intructor_id= intructor_id
+        self.intructor_id= instructor_id
         self.price = price
         self.average_duration =average_duration
         self.description = description
@@ -83,7 +83,7 @@ class Course():
         conn.close()
 
     @classmethod
-    def create_course(cls, intructor_id):
+    def create_course(cls, instructor_id):
         from Schedule import Schedule
         course_name = input("Course Name: ")
         course_description = input("Course Description: ")
@@ -91,19 +91,20 @@ class Course():
         last_updated = datetime.now().date()
         rating = "2.0"
         number_of_students = 0
-        price = int(input("Course Price: "))
+        price = float(input("Course Price: "))
         conn = connect_to_database()
         cursor = conn.cursor()
-        cursor.execute("""INSERT INTO Courses(course_name, intructor_id, price, average_duration, description, rating, last_updated, number_of_students)
+        cursor.execute("""INSERT INTO Courses(course_name, instructor_id, price, average_duration, description, rating, last_updated, number_of_students)
                        OUTPUT INSERTED.course_id
-                       VALUES(?,?,?,?,?,?,?,?,)
-                       """, (course_name, intructor_id, price, average_duration, course_description, rating, last_updated, number_of_students))
+                       VALUES(?,?,?,?,?,?,?,?)
+                       """, (course_name, instructor_id, price, average_duration, course_description, rating, last_updated, number_of_students))
         
         course_id = cursor.fetchone()[0]
-        Schedule.create_schedule(course_id)
         conn.commit()
         cursor.close()
         conn.close()
+        print(f"Created course!, here's course ID {course_id}, Creating Schedule")
+        Schedule.create_schedule(instructor_id)
     
     @staticmethod
     def add_student(course_id):

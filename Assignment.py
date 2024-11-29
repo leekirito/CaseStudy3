@@ -16,9 +16,9 @@ def connect_to_database():
 
 class Assignment():
     
-    def __init__(self, assignment_id, intructor_id, student_id, course_id, assignment_name, assigned_date, due_date, details, grade, response):
+    def __init__(self, assignment_id, instructor_id, student_id, course_id, assignment_name, assigned_date, due_date, details, grade, response):
         self.assignment_id  = assignment_id
-        self.intructor_id =intructor_id
+        self.intructor_id =instructor_id
         self.student_id = student_id
         self. course_id = course_id
         self.assignment_name =assignment_name

@@ -11,6 +11,15 @@ from Student import Student
 from getpass import getpass
 
 class main():
+
+    e_learning_platform_name = "Joshep"
+    date_established = "2020-11-23"
+    url = "https://example.com"
+    location = "Philipphines"
+    currency = "PHP"
+    contact_email = "leekirito363@gmail.com"
+    contact_number = "09518821812"
+
     def __init__(self):
         self.current_student = None
         self.current_instructor = None
@@ -19,13 +28,12 @@ class main():
         self.courses = Course.get_data()
 
     def Start_menu(self):
-
         start_options = {
-            "1": self.log_in_instructor_menu(),
-            "2": self.log_in_student_menu(),
-            "3": self.log_in_admin_menu(),
-            "4": self.register_as_instructor_menu(),
-            "5": self.register_as_student_menu()
+            "1": self.log_in_instructor_menu,
+            "2": self.log_in_student_menu,
+            "3": self.log_in_admin_menu,
+            "4": self.register_as_instructor_menu,
+            "5": self.register_as_student_menu
         }
         while True:
             self.students = Student.get_data()
@@ -80,17 +88,17 @@ class main():
 
     def instructor_menu(self):
         intructor_options = {
-            "1": self.assign_work(),
-            "2": self.show_all_assigned_work(),
-            "3": self.grade_work(),
-            "4": self.create_schedule(),
-            "5": self.update_session_days(),
-            "6": self.update_start_time(),
-            "7": self.update_end_time(),
-            "8": self.update_location(),
-            "9": self.update_time_zone(),
-            "10": self.get_schedule(),
-            "11": self.instructor_personal_info()
+            "1": self.assign_work,
+            "2": self.show_all_assigned_work,
+            "3": self.grade_work,
+            "4": self.create_schedule,
+            "5": self.update_session_days,
+            "6": self.update_start_time,
+            "7": self.update_end_time,
+            "8": self.update_location,
+            "9": self.update_time_zone,
+            "10": self.get_schedule,
+            "11": self.instructor_personal_info
 
         }
         while True:
@@ -149,12 +157,12 @@ class main():
 
     def student_menu(self):
         intructor_options = {
-            "1": self.take_course(),
-            "2": self.show_assigned_work(),
-            "3": self.show_my_enrolled_course(),
-            "4": self.answer_assignment(),
-            "5": self.get_schedule(),
-            "6": self.student_personal_info()
+            "1": self.take_course,
+            "2": self.show_assigned_work,
+            "3": self.show_my_enrolled_course,
+            "4": self.answer_assignment,
+            "5": self.get_schedule,
+            "6": self.student_personal_info
 
         }
         while True:
@@ -176,7 +184,7 @@ class main():
                 print("Invalid choice, please try again.")
     
     def take_course(self):
-        Enrollment.take_course(self.current_student.username)
+        Enrollment.take_course(self.current_student.student_id)
     def show_assigned_work(self):
         Assignment.show_assigned_work(self.current_student.student_id)
     def show_my_enrolled_course(self):
@@ -192,9 +200,9 @@ class main():
 
     def admin_menu(self):
         intructor_options = {
-            "1": self.remove_student(),
-            "2": self.remove_intructor(),
-            "3": self.remove_course(),
+            "1": self.remove_student,
+            "2": self.remove_intructor,
+            "3": self.remove_course,
 
         }
         while True:
@@ -242,7 +250,7 @@ class main():
             print("Instructor Does not exist")
             return
         confirm = input("Are you sure you want to delete this instructor Y/N? ")
-        if confirm.lower == "y":
+        if confirm.lower() == "y":
             PlatformAdmin.remove_instructor(instructor_id)
         else:
             print("Cancelled operation")
@@ -256,7 +264,7 @@ class main():
             print("Course Does not exist")
             return
         confirm = input("Are you sure you want to delete this course Y/N? ")
-        if confirm.lower == "y":
+        if confirm.lower() == "y":
             PlatformAdmin.remove_course(course_id)
         else:
             print("Cancelled operation")
