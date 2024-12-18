@@ -62,7 +62,6 @@ class Assignment():
     @classmethod
     def assign_work(cls, instructor_id):
         # Assign a new assignment to a student
-        
         # Prompt for the student's username and find their ID
         username = input("Student Username: ")
         students = Student.get_data()
@@ -74,14 +73,12 @@ class Assignment():
         else:
             print("Student does not exist")
             return None
-
         # Find the course ID associated with the instructor
         course_id = None
         courses = Course.get_data()
         for course in courses:
             if instructor_id == course.instructor_id:
                 course_id = course.course_id
-
         # Verify if the student is enrolled in the instructor's course
         enrollments = Enrollment.get_data()
         for enroll in enrollments:
@@ -90,14 +87,12 @@ class Assignment():
         else:
             print("This student is not enrolled in your course!")
             return None
-
         # Gather assignment details
         assignment_name = input("Assignment Name: ")
         assigned_date = datetime.now().date()
         due_date = input("Due Date (YYYY-MM-DD): ")
         details = input("Instructions: ")
         grade = 0  # Default grade
-        
         # Save the assignment to the database
         conn = connect_to_database()  
         cursor = conn.cursor()
@@ -106,7 +101,6 @@ class Assignment():
             VALUES(?, ?, ?, ?, ?, ?, ?, ?)
         """, (instructor_id, student_id, course_id, assignment_name, assigned_date, due_date, details, grade))
         conn.commit()
-        
         # Close the connection
         cursor.close()
         conn.close()
